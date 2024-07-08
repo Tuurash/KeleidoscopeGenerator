@@ -1,0 +1,109 @@
+﻿@page
+@model IndexModel
+@{
+	ViewData["Title"] = "Home page";
+}
+
+
+<style>
+	.canvas-container {
+		text-align: center;
+		margin-top: 20px;
+		position: relative;
+		display: inline-block;
+	}
+
+	canvas {
+		border: 1px solid #ddd;
+	}
+
+	.rotate-buttons {
+		position: absolute;
+		bottom: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+		display: flex;
+		gap: 10px;
+	}
+
+		.rotate-buttons button {
+			font-size: larger;
+			color: white;
+			border: none;
+			cursor: pointer;
+		}
+
+			.rotate-buttons button:hover {
+				background-color: rgba(0, 0, 0, 0.7);
+			}
+</style>
+
+
+
+<div class="container">
+
+	<div class="row">
+
+		<div class="col-md-12">
+
+
+
+			<div class="row justify-content-start">
+				<div class="col-md-6">
+					<div class="mb-3">
+						<input class="form-control" type="file" id="fileInput">
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="btn-group mb-3" role="group" aria-label="Basic example">
+						<button type="button" class="btn btn-primary" id="rectangleButton">Rectangle</button>
+						<button type="button" class="btn btn-primary" id="triangleButton">Triangle</button>
+					</div>
+				</div>
+
+			</div>
+
+		</div>
+
+
+		<div class="col-md-6">
+
+			<div class="canvas-container">
+				<h5>Selected Image</h5>
+				<canvas id="imageCanvas" width="400" height="400"></canvas>
+
+			</div>
+
+		</div>
+
+
+
+		<div class="col-md-6">
+			<div class="canvas-container">
+				<h5>Generated Image</h5>
+				<canvas id="patternCanvas" width="400" height="400"></canvas>
+				<div class="rotate-buttons">
+					<button id="rotateLeft">⤴ </button>
+					<button id="rotateRight">⤵ </button>
+				</div>
+			</div>
+		</div>
+
+
+		<h6>Interaction:</h6>
+		<ul>
+			<li>While hovering on selected Image, right click to stop dynamic generation</li>
+			<li>While hovering on selected Image, left click to resume dynamic generation</li>
+			<li>Use Mouse wheel up/down to zoom in/out the generated image</li>
+		</ul>
+
+
+
+
+
+		@section Scripts {
+			<script src="~/js/app.js"></script>
+		}
+
+
+

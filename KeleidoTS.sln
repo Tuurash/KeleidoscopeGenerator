@@ -1,0 +1,30 @@
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35017.193
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KeleidoTS", "KeleidoTS.csproj", "{FCF5C817-84F6-4C7C-8225-80450BB4A550}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CSharpAIStudio", "CSharpAIStudio", "{CD4D658F-3E6C-4123-A6E4-9F5C4AB55829}"
+	ProjectSection(SolutionItems) = preProject
+		Explain.json = Explain.json
+		Improve.json = Improve.json
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FCF5C817-84F6-4C7C-8225-80450BB4A550}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FCF5C817-84F6-4C7C-8225-80450BB4A550}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FCF5C817-84F6-4C7C-8225-80450BB4A550}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FCF5C817-84F6-4C7C-8225-80450BB4A550}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D95704E2-FF3C-44D9-9BC7-EC1FE6E9641E}
+	EndGlobalSection
+EndGlobal
