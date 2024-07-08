@@ -3,14 +3,16 @@
 	"compilerOptions": {
 		"noImplicitAny": false,
 		"noEmitOnError": true,
-		"removeComments": false,
+		"removeComments": true,
 		"sourceMap": true,
-		"target": "es5",
+		"module": "ES6",
+		"target": "ES6",
 		"outDir": "wwwroot/js"
 	},
 	"include": [
 		"scripts/**/*",
-		"wwwroot/ts/app.ts"
-		//"wwwroot/ts/rectangle.ts"
+		"wwwroot/ts/app.ts",
+		"wwwroot/ts/rectangle.ts",
+		"wwwroot/ts/triangle.ts"
 	]
 }
