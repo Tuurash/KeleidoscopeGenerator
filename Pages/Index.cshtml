@@ -4,11 +4,10 @@
 	ViewData["Title"] = "Generator";
 }
 
-
 <style>
 	.canvas-container {
 		text-align: center;
-		margin-top: 20px;
+		margin: 20px auto 0;
 		position: relative;
 		display: inline-block;
 	}
@@ -19,35 +18,20 @@
 
 	.rotate-buttons {
 		position: absolute;
-		bottom: 10px;
-		left: 50%;
-		transform: translateX(-50%);
-		display: flex;
-		gap: 10px;
+		bottom: 0;
+		left: 0;
+		right: 0;
 	}
 
-		.rotate-buttons button {
-			font-size: larger;
-			color: white;
-			border: none;
-			cursor: pointer;
+		.rotate-buttons .btn {
+			border-radius: 0;
 		}
 
-			.rotate-buttons button:hover {
-				background-color: rgba(0, 0, 0, 0.7);
-			}
 </style>
 
-
-
 <div class="container">
-
 	<div class="row">
-
 		<div class="col-md-12">
-
-
-
 			<div class="row justify-content-start">
 				<div class="col-md-6">
 					<div class="mb-3">
@@ -60,35 +44,43 @@
 						<button type="button" class="btn btn-dark" id="triangleButton">Triangle</button>
 					</div>
 				</div>
-
 			</div>
-
 		</div>
 
-
 		<div class="col-md-6">
-
 			<div class="canvas-container">
 				<h5>Selected Image</h5>
 				<canvas id="imageCanvas" width="400" height="400"></canvas>
-
 			</div>
-
 		</div>
-
-
 
 		<div class="col-md-6">
 			<div class="canvas-container">
 				<h5>Generated Image</h5>
 				<canvas id="patternCanvas" width="400" height="400"></canvas>
-				<div class="rotate-buttons">
-					<button id="rotateLeft">⤴ </button>
-					<button id="rotateRight">⤵ </button>
+				<div class="rotate-buttons d-flex justify-content-center">
+					<button id="rotateLeft" class="btn btn-dark"> Canvas Left</button>
+					<button id="rotateRight" class="btn btn-dark"> Canvas Right</button>
+					<button id="flipHorizontal" class="btn btn-dark">Pattern Horizontal</button>
+					<button id="flipVertical" class="btn btn-dark">Pattern Vertical</button>
 				</div>
 			</div>
 		</div>
 
+		<div class="row mt-3">
+			<div class="col-md-6">
+				<label for="rectWidth">Rectangle Width:</label>
+				<input type="range" id="rectWidth" name="rectWidth" min="10" max="400" value="90">
+			</div>
+			<div class="col-md-6">
+				<label for="rectHeight">Rectangle Height:</label>
+				<input type="range" id="rectHeight" name="rectHeight" min="10" max="400" value="128">
+			</div>
+			<div class="col-md-6">
+				<label for="triangleHypotenuse">Triangle Hypotenuse:</label>
+				<input type="range" id="triangleHypotenuse" name="triangleHypotenuse" min="10" max="400" value="150">
+			</div>
+		</div>
 
 		<h6>Interaction:</h6>
 		<ul>
@@ -96,14 +88,8 @@
 			<li>While hovering on selected Image, left click to resume dynamic generation</li>
 			<li>Use Mouse wheel up/down to zoom in/out the generated image</li>
 		</ul>
+	</div>
 
-
-
-
-
-		@section Scripts {
-			<script type="module" src="~/js/app.js"></script>
-		}
-
-
-
+	@section Scripts {
+		<script type="module" src="~/js/app.js"></script>
+	}

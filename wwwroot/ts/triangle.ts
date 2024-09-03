@@ -1,82 +1,146 @@
-﻿export function drawTriangle(imageCtx: CanvasRenderingContext2D, img: HTMLImageElement, sx: number, sy: number, tw: number, th: number, imageCanvas: HTMLCanvasElement) {
-    imageCtx.clearRect(0, 0, imageCanvas.width, imageCanvas.height);
-    imageCtx.drawImage(img, 0, 0, imageCanvas.width, imageCanvas.height);
-    imageCtx.strokeStyle = 'blue';
-    imageCtx.lineWidth = 2;
-    imageCtx.beginPath();
-    imageCtx.moveTo(sx * (imageCanvas.width / img.width), sy * (imageCanvas.height / img.height));
-    imageCtx.lineTo(sx * (imageCanvas.width / img.width) + tw * (imageCanvas.width / img.width), sy * (imageCanvas.height / img.height));
-    imageCtx.lineTo(sx * (imageCanvas.width / img.width), sy * (imageCanvas.height / img.height) + th * (imageCanvas.height / img.height));
-    imageCtx.closePath();
-    imageCtx.stroke();
+﻿// Function to draw a triangle on a canvas context
+export function drawTriangle(
+	canvasContext: CanvasRenderingContext2D,
+	imageElement: HTMLImageElement,
+	sourceX: number,
+	sourceY: number,
+	triangleWidth: number,
+	triangleHeight: number,
+	canvasElement: HTMLCanvasElement
+) {
+	// Clear the canvas
+	canvasContext.clearRect(0, 0, canvasElement.width, canvasElement.height);
+
+	// Draw the image onto the canvas
+	canvasContext.drawImage(imageElement, 0, 0, canvasElement.width, canvasElement.height);
+
+	// Set the triangle style
+	canvasContext.strokeStyle = 'blue';
+	canvasContext.lineWidth = 2;
+
+	// Calculate the scaled coordinates and dimensions for the triangle
+	const scaledX = sourceX * (canvasElement.width / imageElement.width);
+	const scaledY = sourceY * (canvasElement.height / imageElement.height);
+	const scaledTriangleWidth = triangleWidth * (canvasElement.width / imageElement.width);
+	const scaledTriangleHeight = triangleHeight * (canvasElement.height / imageElement.height);
+
+	// Draw the triangle
+	canvasContext.beginPath();
+	canvasContext.moveTo(scaledX, scaledY);
+	canvasContext.lineTo(scaledX + scaledTriangleWidth, scaledY);
+	canvasContext.lineTo(scaledX, scaledY + scaledTriangleHeight);
+	canvasContext.closePath();
+	canvasContext.stroke();
 }
 
-export function generateTrianglePattern(img: HTMLImageElement, sx: number, sy: number, tw: number, th: number, zoomLevel: number, rotation: number, patternCanvas: HTMLCanvasElement, patternCtx: CanvasRenderingContext2D) {
-    const tempCanvas = document.createElement('canvas');
-    const tempCtx = tempCanvas.getContext('2d');
-    tempCanvas.width = tw;
-    tempCanvas.height = th;
+// Function to generate a pattern from a triangle region of an image
+export function generateTrianglePattern(
+	imageElement: HTMLImageElement,
+	sourceX: number,
+	sourceY: number,
+	triangleWidth: number,
+	triangleHeight: number,
+	zoomLevel: number,
+	rotationAngle: number,
+	patternCanvasElement: HTMLCanvasElement,
+	patternCanvasContext: CanvasRenderingContext2D,
+	flipHorizontal: boolean,
+	flipVertical: boolean
+) {
+	// Create a temporary canvas to extract the triangle region from the image
+	const tempCanvas = document.createElement('canvas');
+	const tempCanvasContext = tempCanvas.getContext('2d');
+	tempCanvas.width = triangleWidth;
+	tempCanvas.height = triangleHeight;
 
-    tempCtx.beginPath();
-    tempCtx.moveTo(0, 0);
-    tempCtx.lineTo(tw, 0);
-    tempCtx.lineTo(0, th);
-    tempCtx.closePath();
-    tempCtx.clip();
+	// Define the triangle clipping region
+	tempCanvasContext.beginPath();
+	tempCanvasContext.moveTo(0, 0);
+	tempCanvasContext.lineTo(triangleWidth, 0);
+	tempCanvasContext.lineTo(0, triangleHeight);
+	tempCanvasContext.closePath();
+	tempCanvasContext.clip();
 
-    tempCtx.drawImage(img, sx, sy, tw, th, 0, 0, tw, th);
+	// Draw the specified triangle region of the image onto the temporary canvas
+	tempCanvasContext.drawImage(imageElement, sourceX, sourceY, triangleWidth, triangleHeight, 0, 0, triangleWidth, triangleHeight);
 
-    const patternImage = new Image();
-    patternImage.src = tempCanvas.toDataURL();
+	// Create an image element from the temporary canvas
+	const patternImage = new Image();
+	patternImage.src = tempCanvas.toDataURL();
 
-    patternImage.onload = () => {
-        const tempPatternCanvas = document.createElement('canvas');
-        const tempPatternCtx = tempPatternCanvas.getContext('2d');
-        tempPatternCanvas.width = patternCanvas.width;
-        tempPatternCanvas.height = patternCanvas.height;
-        tempPatternCtx.clearRect(0, 0, tempPatternCanvas.width, tempPatternCanvas.height);
+	patternImage.onload = () => {
+		// Create another temporary canvas to generate the pattern
+		const tempPatternCanvas = document.createElement('canvas');
+		const tempPatternCanvasContext = tempPatternCanvas.getContext('2d');
+		tempPatternCanvas.width = patternCanvasElement.width;
+		tempPatternCanvas.height = patternCanvasElement.height;
 
-        const twZoomed = tw * zoomLevel;
-        const thZoomed = th * zoomLevel;
-        const numCols = Math.ceil(tempPatternCanvas.width / twZoomed);
-        const numRows = Math.ceil(tempPatternCanvas.height / thZoomed);
+		// Clear the temporary pattern canvas
+		tempPatternCanvasContext.clearRect(0, 0, tempPatternCanvas.width, tempPatternCanvas.height);
 
-        for (let row = 0; row < numRows + 1; row++) {
-            for (let col = 0; col < numCols + 1; col++) {
-                const x = col * twZoomed;
-                const y = row * thZoomed;
+		// Calculate the dimensions of the tiles in the pattern
+		const tileWidth = triangleWidth * zoomLevel;
+		const tileHeight = triangleHeight * zoomLevel;
 
-                tempPatternCtx.save();
-                tempPatternCtx.translate(x, y);
-                if ((col + row) % 2 === 0) {
-                    tempPatternCtx.scale(1, 1);
-                } else {
-                    tempPatternCtx.scale(-1, 1);
-                    tempPatternCtx.translate(-twZoomed, 0);
-                }
-                tempPatternCtx.drawImage(patternImage, 0, 0, twZoomed, thZoomed);
-                tempPatternCtx.restore();
+		// Calculate the number of rows and columns needed to fill the pattern canvas
+		const numCols = Math.ceil(tempPatternCanvas.width / tileWidth);
+		const numRows = Math.ceil(tempPatternCanvas.height / tileHeight);
 
-                tempPatternCtx.save();
-                tempPatternCtx.translate(x, y + thZoomed);
-                tempPatternCtx.scale(1, -1);
-                tempPatternCtx.drawImage(patternImage, 0, 0, twZoomed, thZoomed);
-                tempPatternCtx.restore();
+		// Draw the pattern
+		for (let row = 0; row < numRows + 1; row++) {
+			for (let col = 0; col < numCols + 1; col++) {
+				const x = col * tileWidth;
+				const y = row * tileHeight;
 
-                tempPatternCtx.save();
-                tempPatternCtx.translate(x + twZoomed, y + thZoomed);
-                tempPatternCtx.scale(-1, -1);
-                tempPatternCtx.drawImage(patternImage, 0, 0, twZoomed, thZoomed);
-                tempPatternCtx.restore();
-            }
-        }
+				tempPatternCanvasContext.save();
+				tempPatternCanvasContext.translate(x, y);
 
-        patternCtx.clearRect(0, 0, patternCanvas.width, patternCanvas.height);
-        patternCtx.save();
-        patternCtx.translate(patternCanvas.width / 2, patternCanvas.height / 2);
-        patternCtx.rotate(rotation * Math.PI / 180);
-        patternCtx.translate(-patternCanvas.width / 2, -patternCanvas.height / 2);
-        patternCtx.drawImage(tempPatternCanvas, 0, 0);
-        patternCtx.restore();
-    };
+				// Alternate the scale for every other tile to create a mirrored effect
+				if ((col + row) % 2 === 0) {
+					tempPatternCanvasContext.scale(1, 1);
+				} else {
+					tempPatternCanvasContext.scale(-1, 1);
+					tempPatternCanvasContext.translate(-tileWidth, 0);
+				}
+
+				// Apply horizontal and vertical flips
+				if (flipHorizontal) {
+					tempPatternCanvasContext.scale(-1, 1);
+					tempPatternCanvasContext.translate(-tileWidth, 0);
+				}
+				if (flipVertical) {
+					tempPatternCanvasContext.scale(1, -1);
+					tempPatternCanvasContext.translate(0, -tileHeight);
+				}
+
+				// Draw the pattern image onto the temporary pattern canvas
+				tempPatternCanvasContext.drawImage(patternImage, 0, 0, tileWidth, tileHeight);
+				tempPatternCanvasContext.restore();
+
+				// Draw the flipped pattern images to create a seamless pattern
+				tempPatternCanvasContext.save();
+				tempPatternCanvasContext.translate(x, y + tileHeight);
+				tempPatternCanvasContext.scale(1, -1);
+				tempPatternCanvasContext.drawImage(patternImage, 0, 0, tileWidth, tileHeight);
+				tempPatternCanvasContext.restore();
+
+				tempPatternCanvasContext.save();
+				tempPatternCanvasContext.translate(x + tileWidth, y + tileHeight);
+				tempPatternCanvasContext.scale(-1, -1);
+				tempPatternCanvasContext.drawImage(patternImage, 0, 0, tileWidth, tileHeight);
+				tempPatternCanvasContext.restore();
+			}
+		}
+
+		// Clear the main pattern canvas
+		patternCanvasContext.clearRect(0, 0, patternCanvasElement.width, patternCanvasElement.height);
+
+		// Rotate and draw the pattern onto the main pattern canvas
+		patternCanvasContext.save();
+		patternCanvasContext.translate(patternCanvasElement.width / 2, patternCanvasElement.height / 2);
+		patternCanvasContext.rotate(rotationAngle * Math.PI / 180);
+		patternCanvasContext.translate(-patternCanvasElement.width / 2, -patternCanvasElement.height / 2);
+		patternCanvasContext.drawImage(tempPatternCanvas, 0, 0);
+		patternCanvasContext.restore();
+	};
 }
