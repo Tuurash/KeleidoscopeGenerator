@@ -2,19 +2,28 @@ name: Deployment
 
 on:
   push:
-    branches:
-      - main
+    branches: [ "main", "v2" ]
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Allow only one concurrent deployment
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: 8.0.x
 
@@ -22,13 +31,23 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build KeleidoTS.csproj --configuration Release --no-restore
+        run: dotnet build --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish KeleidoTS.csproj -c Release -o publish_output
+        run: dotnet publish --configuration Release --output ./publish
 
-      - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v2
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./publish_output/wwwroot
+          path: ./publish/wwwroot
+
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v2
