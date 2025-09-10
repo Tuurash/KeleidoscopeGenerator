@@ -1,10 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "L/d7oSPwdQE=",
+  "dgSpecHash": "8VuTMCk8fEo=",
   "success": true,
-  "projectFilePath": "R:\\KeleidoTS_es6_v2\\KeleidoTS\\KeleidoTS.csproj",
+  "projectFilePath": "X:\\KeleidoscopeGenerator\\KeleidoTS.csproj",
   "expectedPackageFiles": [
-    "C:\\Users\\rexas\\.nuget\\packages\\microsoft.typescript.msbuild\\5.5.3\\microsoft.typescript.msbuild.5.5.3.nupkg.sha512"
+    "C:\\Users\\turash\\.nuget\\packages\\microsoft.typescript.msbuild\\5.5.3\\microsoft.typescript.msbuild.5.5.3.nupkg.sha512"
   ],
   "logs": []
 }

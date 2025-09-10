@@ -162,23 +162,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\rexas\\.nuget\\packages\\": {},
+    "C:\\Users\\turash\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "R:\\KeleidoTS_es6_v2\\KeleidoTS\\KeleidoTS.csproj",
+      "projectUniqueName": "X:\\KeleidoscopeGenerator\\KeleidoTS.csproj",
       "projectName": "KeleidoTS",
-      "projectPath": "R:\\KeleidoTS_es6_v2\\KeleidoTS\\KeleidoTS.csproj",
-      "packagesPath": "C:\\Users\\rexas\\.nuget\\packages\\",
-      "outputPath": "R:\\KeleidoTS_es6_v2\\KeleidoTS\\obj\\",
+      "projectPath": "X:\\KeleidoscopeGenerator\\KeleidoTS.csproj",
+      "packagesPath": "C:\\Users\\turash\\.nuget\\packages\\",
+      "outputPath": "X:\\KeleidoscopeGenerator\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\rexas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\turash\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -204,9 +204,9 @@
       "restoreAuditProperties": {
         "enableAudit": "true",
         "auditLevel": "low",
-        "auditMode": "all"
+        "auditMode": "direct"
       },
-      "SdkAnalysisLevel": "9.0.100"
+      "SdkAnalysisLevel": "9.0.300"
     },
     "frameworks": {
       "net8.0": {
@@ -238,7 +238,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100-preview.7.24407.12/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
       }
     }
   }
