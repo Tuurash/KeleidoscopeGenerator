@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "dgSpecHash": "L/d7oSPwdQE=",
+  "success": true,
+  "projectFilePath": "R:\\KeleidoTS_es6_v2\\KeleidoTS\\KeleidoTS.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\rexas\\.nuget\\packages\\microsoft.typescript.msbuild\\5.5.3\\microsoft.typescript.msbuild.5.5.3.nupkg.sha512"
+  ],
+  "logs": []
+}
