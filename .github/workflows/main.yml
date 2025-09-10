@@ -1,4 +1,4 @@
-name: Deployment
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -16,16 +16,20 @@ concurrency:
   group: "pages"
   cancel-in-progress: true
 
+env:
+  DOTNET_VERSION: 8.0.x
+  PROJECT_NAME: KeleidoTS
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup .NET
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v4
         with:
-          dotnet-version: 8.0.x
+          dotnet-version: ${{ env.DOTNET_VERSION }}
 
       - name: Restore dependencies
         run: dotnet restore
@@ -34,7 +38,12 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish --configuration Release --output ./publish
+        run: |
+          dotnet publish ${{ env.PROJECT_NAME }}.csproj -c Release -o ./publish
+          touch ./publish/wwwroot/.nojekyll
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v2
@@ -50,4 +59,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
