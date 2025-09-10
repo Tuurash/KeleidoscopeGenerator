@@ -29,6 +29,9 @@ jobs:
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
+        with:
+          # Ensure Pages is enabled for the repo if it doesn't exist yet
+          enablement: true
 
       - name: Restore dependencies
         run: dotnet restore
@@ -53,6 +56,8 @@ jobs:
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./_site
 
   deploy:
     environment:

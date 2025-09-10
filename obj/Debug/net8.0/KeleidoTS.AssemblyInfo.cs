@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("KeleidoTS")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0298c49812bb79aa2bb26717d281da5a7efb99d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fd278b05366bc732e63d95a9e70d6c2efd0e984f")]
 [assembly: System.Reflection.AssemblyProductAttribute("KeleidoTS")]
 [assembly: System.Reflection.AssemblyTitleAttribute("KeleidoTS")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
