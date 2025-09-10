@@ -1,4 +1,4 @@
-name: GithubPages deployment
+name: Deployment
 
 on:
   push:
@@ -22,10 +22,10 @@ jobs:
         run: dotnet restore
 
       - name: Build
-        run: dotnet build --configuration Release --no-restore
+        run: dotnet build KeleidoTS.csproj --configuration Release --no-restore
 
       - name: Publish
-        run: dotnet publish -c Release -o publish_output
+        run: dotnet publish KeleidoTS.csproj -c Release -o publish_output
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
